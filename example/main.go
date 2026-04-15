@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	vaultkey "github.com/vaultkey/vaultkey-go"
+	vaultkey "github.com/vaultkeys/vaultkey-go"
 )
 
 func main() {
