@@ -100,6 +100,13 @@ func main() {
 	mustOK("stablecoin balance", apiErr, err)
 	fmt.Printf("USDC balance after transfer: %s %s\n", bal.Balance, bal.Symbol)
 
+	// Master wallet stablecoin balance (reconciliation)
+	masterBal, apiErr, err := client.Stablecoin.MasterWalletBalance(ctx,
+		vaultkey.ChainTypeEVM, "usdc", "base-sepolia", "",
+	)
+	mustOK("master wallet balance", apiErr, err)
+	fmt.Printf("Master wallet USDC balance: %s %s\n", masterBal.Balance, masterBal.Symbol)
+
 	// ── 6. Sweep ──────────────────────────────────────────────────────────────
 
 	sweepJob, apiErr, err := client.Wallets.Sweep(ctx, evmWallet.ID, vaultkey.SweepPayload{

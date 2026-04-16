@@ -5,7 +5,7 @@ Official Go SDK for the [VaultKey](https://vaultkeys.dev) API.
 ## Installation
 
 ```bash
-go get github.com/vaultkey/vaultkey-go
+go get github.com/vaultkeys/vaultkey-go
 ```
 
 ## Requirements

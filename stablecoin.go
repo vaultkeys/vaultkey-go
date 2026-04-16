@@ -80,3 +80,29 @@ func (s *StablecoinService) Balance(ctx context.Context, walletID string, chainT
 	apiErr, err := s.client.get(ctx, path, &resp)
 	return resp, apiErr, err
 }
+
+// MasterWalletBalance returns the stablecoin balance of the project's configured
+// master wallet for a given chain and token. Useful for reconciliation.
+//
+// For EVM, provide chainName (preferred) or chainID.
+// For Solana, leave both empty.
+//
+//	bal, apiErr, err := client.Stablecoin.MasterWalletBalance(ctx,
+//	    vaultkey.ChainTypeEVM, "usdc", "base", "",
+//	)
+//	fmt.Println(bal.Balance) // "1000.00"
+func (s *StablecoinService) MasterWalletBalance(ctx context.Context, chainType ChainType, token, chainName, chainID string) (StablecoinBalanceResult, *ErrorResponse, error) {
+	path := "/master-wallets/balance?chain_type=" + string(chainType) + "&token=" + token
+
+	if chainType == ChainTypeEVM {
+		if chainName != "" {
+			path += "&chain_name=" + chainName
+		} else if chainID != "" {
+			path += "&chain_id=" + chainID
+		}
+	}
+
+	var resp StablecoinBalanceResult
+	apiErr, err := s.client.get(ctx, path, &resp)
+	return resp, apiErr, err
+}
